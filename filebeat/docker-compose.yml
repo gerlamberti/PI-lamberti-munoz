@@ -1,0 +1,10 @@
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.10.2
+    container_name: filebeat
+    user: root
+    volumes:
+      - ./logs:/var/log/my_logs
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./certs:/etc/certs:ro
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200

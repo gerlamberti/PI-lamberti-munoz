@@ -1,0 +1,22 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/my_logs/*.log  # Ruta a los logs que mapeaste en el contenedor
+
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]  # Conexión al contenedor de Elasticsearch
+  protocol: "http"
+  # Configura autenticación si Elasticsearch está protegido:
+  # username: "elastic"
+  # password: "changeme"
+
+setup.kibana:
+  host: "http://kibana:5601"  # Si también usas Kibana
+
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+  - add_kubernetes_metadata: ~
