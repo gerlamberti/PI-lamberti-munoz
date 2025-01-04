@@ -1,0 +1,20 @@
+---
+- name: Instalar Vim en servidores Ubuntu
+  hosts: databases
+  become: true
+  tasks:
+    - name: Actualizar la caché de paquetes
+      apt:
+        update_cache: yes
+
+    - name: Instalar el paquete Vim
+      apt:
+        name: vim
+        state: present
+    - name: Agregar línea a /etc/sudoers
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        line: "databases ALL=(ALL) NOPASSWD: /usr/bin/apt update mysql-servers"
+        insertafter: "^root\\s+ALL=\\(ALL:ALL\\)\\s+ALL"
+        #validate: "visudo -cf %s"
