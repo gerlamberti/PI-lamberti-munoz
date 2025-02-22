@@ -1,0 +1,51 @@
+# Archivo de configuración de Kibana
+# Guardar como "kibana.yml" en la ruta de configuración del contenedor o instalación
+
+# Dirección de escucha de Kibana
+server.host: "0.0.0.0"  # Escucha en todas las interfaces de red
+
+# Puerto de escucha de Kibana
+server.port: 5601
+
+# Conexión a Elasticsearch
+elasticsearch.hosts: ["http://elasticsearch:9200"]  # Cambiar a la IP/host y puerto de tu Elasticsearch
+
+# Claves de encriptación (esenciales para producción)
+xpack.security.encryptionKey: "unaClaveSeguraDe32Caracteres12345"
+xpack.reporting.encryptionKey: "otraClaveSeguraDe32Caracteres12345"
+xpack.encryptedSavedObjects.encryptionKey: "claveParaObjetosGuardadosDe32Caracteres12345"
+
+# Deshabilitar telemetría (opcional)
+telemetry.enabled: false
+
+# Configuración de sesión
+xpack.security.session.idleTimeout: "8h"  # Tiempo de inactividad antes de cerrar sesión
+xpack.security.session.lifespan: "30d"   # Tiempo máximo antes de requerir nueva autenticación
+
+# Configuración de logs
+logging:
+  appenders:
+    default:
+      type: console
+      layout:
+        type: json
+    file:
+      type: file
+      fileName: /var/log/kibana/kibana.log  # Ruta al archivo de log
+      layout:
+        type: json
+  root:
+    appenders: [default, file]
+    level: info
+
+# Configuración para HTTPS (opcional, si tienes certificados configurados)
+# server.ssl.enabled: true
+# server.ssl.certificate: "/path/to/your/certificate.pem"
+# server.ssl.key: "/path/to/your/key.pem"
+
+# Configuración de CORS (opcional, si necesitas acceso desde otras aplicaciones)
+# server.cors.enabled: true
+# server.cors.allow-origin: ["*"]
+
+# Permitir que Kibana se comunique con Elasticsearch en redes locales
+elasticsearch.ssl.verificationMode: none
