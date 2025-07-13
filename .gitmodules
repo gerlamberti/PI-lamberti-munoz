@@ -1,0 +1,3 @@
+[submodule "RBAC-module"]
+	path = RBAC-module
+	url = https://github.com/gerlamberti/RBAC-module
