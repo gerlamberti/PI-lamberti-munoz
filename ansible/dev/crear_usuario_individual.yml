@@ -1,0 +1,57 @@
+---
+- name: Crear usuario {{ usuario }}
+  user:
+    name: "{{ usuario }}"
+    password: "{{ usuarios_definidos[usuario].password }}"
+    shell: "{{ usuarios_definidos[usuario].shell }}"
+    state: present
+    create_home: yes
+
+- name: Agregar {{ usuario }} al grupo sudo si corresponde
+  when: usuarios_definidos[usuario].sudo
+  user:
+    name: "{{ usuario }}"
+    groups: sudo
+    append: yes
+
+- name: Agregar entrada sudo en /etc/sudoers para {{ usuario }}
+  when: usuarios_definidos[usuario].sudo
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: "^{{ usuario }}\\s+ALL="
+    line: "{{ usuario }} ALL=(ALL) NOPASSWD:ALL"
+    validate: 'visudo -cf %s'
+    backup: yes
+
+- name: Configurar ~/.bashrc del usuario {{ usuario }}
+  blockinfile:
+    path: "/home/{{ usuario }}/.bashrc"
+    create: yes
+    owner: "{{ usuario }}"
+    group: "{{ usuario }}"
+    mode: '0644'
+    block: |
+      export HISTTIMEFORMAT="%F %T "
+      if [ -n "$SSH_USER_AUTH" ]; then
+          export CERT=$(cat $SSH_USER_AUTH | awk '{print $2 " " $3}' | ssh-keygen -Lf - 2> /dev/null | awk '/Key ID/ {gsub(/"/, "", $0); print $3}')
+          if [ -n "$CERT" ]; then
+              export PS1="($CERT)$PS1"
+          else
+              export CERT="$REMOTEUSER"
+              export PS1="($CERT)$PS1"
+          fi
+          IP_CONNECTION=$(echo $SSH_CONNECTION | awk '{print $1}')
+      fi
+
+      PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'{ 
+          current_hist_num=$(history 1 | awk "{print \$1}")
+          last_hist_num=$(awk "{print \$4}" <(tail -n 1 /var/log/comandos_history))
+          if [ "$current_hist_num" != "$last_hist_num" ]; then
+              current_history=$(history 1)
+              vsecuencia=$(echo "$current_history" | awk "{print \$1}")
+              vtimestamp=$(echo "$current_history" | awk "{print \$2, \$3}")
+              vcomando=$(echo "$current_history" | awk "{\$1=\"\"; \$2=\"\"; \$3=\"\"; print \$0}" | sed "s/^ *//")
+              echo "$CERT $USER $IP_CONNECTION $vsecuencia $vtimestamp $vcomando" >> /var/log/comandos_history
+          fi 
+      }'

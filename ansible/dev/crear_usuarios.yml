@@ -1,0 +1,31 @@
+---
+- name: Crear usuarios en servidores según configuración
+  hosts: all
+  become: true
+
+  vars:
+    usuarios_definidos:
+      access3:
+        password: "{{ 'access3' | password_hash('sha512') }}"
+        shell: /usr/sbin/nologin
+        sudo: false
+      sysadmin3:
+        password: "{{ 'sysadmin3' | password_hash('sha512') }}"
+        shell: /bin/bash
+        sudo: true
+      databases3:
+        password: "{{ 'databases3' | password_hash('sha512') }}"
+        shell: /bin/bash
+        sudo: false
+      devops3:
+        password: "{{ 'devops3' | password_hash('sha512') }}"
+        shell: /bin/bash
+        sudo: false
+
+  tasks:
+    - name: Incluir tareas para cada usuario
+      include_tasks: crear_usuario_individual.yml
+      loop: "{{ usuarios_a_crear | default([]) }}"
+      loop_control:
+        loop_var: usuario
+
