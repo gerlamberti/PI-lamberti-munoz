@@ -14,13 +14,13 @@
     groups: sudo
     append: yes
 
-- name: Agregar entrada sudo en /etc/sudoers para {{ usuario }}
-  when: usuarios_definidos[usuario].sudo
+- name: Configurar reglas de sudo personalizadas para {{ usuario }}
+  when: usuario in sudo_rules
   lineinfile:
     path: /etc/sudoers
     state: present
     regexp: "^{{ usuario }}\\s+ALL="
-    line: "{{ usuario }} ALL=(ALL) NOPASSWD:ALL"
+    line: "{{ usuario }} ALL=(ALL) NOPASSWD: {{ sudo_rules[usuario] | join(', ') }}"
     validate: 'visudo -cf %s'
     backup: yes
 

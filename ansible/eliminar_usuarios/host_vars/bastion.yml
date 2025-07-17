@@ -1,0 +1,4 @@
+usuarios_a_eliminar:
+  - access2
+  - sysadmin2
+  - databases

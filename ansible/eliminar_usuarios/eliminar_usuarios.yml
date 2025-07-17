@@ -1,0 +1,16 @@
+---
+- name: Eliminar usuarios de los servidores según configuración
+  hosts: all
+  become: true
+
+  vars:
+    sudoers_path: /etc/sudoers
+
+  tasks:
+    - name: Incluir tareas para eliminar cada usuario
+      include_tasks: eliminar_usuario_individual.yml
+      loop: "{{ usuarios_a_eliminar | default([]) }}"
+      loop_control:
+        loop_var: usuario_item
+      vars:
+        usuario: "{{ usuario_item }}"

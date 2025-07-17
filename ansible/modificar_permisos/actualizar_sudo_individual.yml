@@ -1,0 +1,9 @@
+---
+- name: Asegurar entrada sudo actualizada para {{ usuario }}
+  when: usuario in sudo_rules
+  lineinfile:
+    path: /etc/sudoers
+    regexp: "^{{ usuario }}\\s+ALL="
+    line: "{{ usuario }} ALL=(ALL) NOPASSWD: {{ sudo_rules[usuario] | join(', ') }}"
+    validate: 'visudo -cf %s'
+    backup: yes

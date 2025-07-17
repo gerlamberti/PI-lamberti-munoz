@@ -5,22 +5,25 @@
 
   vars:
     usuarios_definidos:
-      access3:
-        password: "{{ 'access3' | password_hash('sha512') }}"
+      access:
+        password: "{{ 'access' | password_hash('sha512') }}"
         shell: /usr/sbin/nologin
         sudo: false
-      sysadmin3:
-        password: "{{ 'sysadmin3' | password_hash('sha512') }}"
-        shell: /bin/bash
-        sudo: true
-      databases3:
-        password: "{{ 'databases3' | password_hash('sha512') }}"
+      sysadmin:
+        password: "{{ 'sysadmin' | password_hash('sha512') }}"
         shell: /bin/bash
         sudo: false
-      devops3:
-        password: "{{ 'devops3' | password_hash('sha512') }}"
+      databases:
+        password: "{{ 'databases' | password_hash('sha512') }}"
         shell: /bin/bash
         sudo: false
+      devops:
+        password: "{{ 'devops' | password_hash('sha512') }}"
+        shell: /bin/bash
+        sudo: false
+  
+  vars_files:
+    - sudo_rules.yml
 
   tasks:
     - name: Incluir tareas para cada usuario

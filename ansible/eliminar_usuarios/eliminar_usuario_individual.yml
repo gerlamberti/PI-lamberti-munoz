@@ -1,0 +1,14 @@
+---
+- name: Eliminar entrada de {{ usuario }} de /etc/sudoers si existe
+  lineinfile:
+    path: "{{ sudoers_path }}"
+    regexp: "^{{ usuario }}\\s+ALL="
+    state: absent
+    validate: 'visudo -cf %s'
+  ignore_errors: true
+
+- name: Eliminar usuario {{ usuario }}
+  user:
+    name: "{{ usuario }}"
+    state: absent
+    remove: yes  # Elimina también el home y mail spool

@@ -1,0 +1,16 @@
+---
+- name: Actualizar reglas de sudo de usuarios
+  hosts: all
+  become: true
+
+  vars_files:
+    - sudo_rules.yml
+
+  tasks:
+    - name: Incluir tareas para actualizar sudo de cada usuario
+      include_tasks: actualizar_sudo_individual.yml
+      loop: "{{ usuarios_a_actualizar_sudo | default([]) }}"
+      loop_control:
+        loop_var: usuario_item
+      vars:
+        usuario: "{{ usuario_item }}"

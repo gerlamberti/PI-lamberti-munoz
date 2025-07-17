@@ -1,0 +1,35 @@
+# sudo_rules.yml
+sudo_rules:
+  databases:
+    - /usr/bin/systemctl start mysql
+    - /usr/bin/systemctl stop mysql
+    - /usr/bin/systemctl restart mysql
+    - /usr/bin/mysql
+    - /usr/bin/mysqldump
+    - /usr/bin/mysqladmin
+
+  sysadmin:
+    - /usr/sbin/useradd
+    - /usr/sbin/userdel
+    - /usr/sbin/usermod
+    - /usr/bin/passwd
+    - /usr/bin/systemctl *
+    - /usr/bin/journalctl
+    - /usr/bin/firewall-cmd
+    - /usr/bin/ufw
+    - /usr/bin/rsync
+    - /usr/bin/htop
+    - /bin/systemctl
+    - /bin/mkdir
+    - /bin/chown
+    - /bin/chmod
+    - /bin/su
+
+  devops:
+    - /usr/bin/docker
+    - /usr/bin/docker-compose
+    - /usr/bin/ansible-playbook
+    - /usr/local/bin/kubectl
+    - /usr/bin/systemctl restart nginx
+    - /usr/bin/systemctl restart apache2
+    - /usr/bin/git

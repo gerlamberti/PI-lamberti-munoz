@@ -1,0 +1,11 @@
+usuarios_a_crear:
+  - access
+  - sysadmin
+
+usuarios_a_eliminar:
+  - access2
+  - sysadmin2
+  - databases
+
+usuarios_a_actualizar_sudo:
+ - sysadmin

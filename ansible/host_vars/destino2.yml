@@ -1,0 +1,13 @@
+usuarios_a_crear:
+  - devops
+  - sysadmin
+
+usuarios_a_eliminar:
+  - devops2
+  - sysadmin2
+  - databases
+  - ansiblecenter
+
+usuarios_a_actualizar_sudo:
+  - sysadmin
+  - devops
