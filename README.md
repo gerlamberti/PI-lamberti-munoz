@@ -69,19 +69,7 @@ El sistema está compuesto por:
 ---
 ## 🖥 Topología de red
 
-[ Usuario Técnico ]
-|
-v
-[ Servidor Bastión / Gateway ]
-|
-v
-[ Servicio RBAC ] <--> [ EJBCA / OCSP ]
-|
-+--> [ Servidores de destino ]
-|
-+--> [ Servidor ARCenter (Elastic Stack) ]
-
----
+[ Usuario Técnico ] -> [ Servidor Bastión / Gateway ] -> [ Servicio RBAC ] <--> [ EJBCA / OCSP ] --> [ Servidores de destino ] --> [ Servidor ARCenter (Elastic Stack) ] 
 
 ## 🚀 Instalación
 
