@@ -1,0 +1,30 @@
+# ================================== General ===================================
+
+# Filebeat Name
+name: destino1
+
+# ================================== Outputs ===================================
+
+output.elasticsearch:
+  hosts: ["172.18.66.138:9200"]
+
+# ============================== Filebeat inputs ===============================
+
+#filebeat.inputs:
+#- type: log
+#  paths:
+#    - /var/log/comandos_history   
+
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/comandos_history
+    fields:
+      log_type: "comandos_history"
+    fields_under_root: true
+    processors:
+      - dissect:
+          tokenizer: "%{cliente} %{usuario_sistema} %{ip_origen} %{id} %{+timestamp} %{+timestamp} %{comando}"
+          field: "message"
+          target_prefix: "parsed"
