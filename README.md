@@ -11,7 +11,7 @@ La solución integra autenticación mediante certificados digitales X.509, autor
 
 ## 🎯 Objetivos
 
-- **Autenticación**: Validar el acceso de usuarios técnicos a servidores mediante certificados digitales emitidos centralizadamente en **EJBCA**.
+- **Autenticación**: Validar el acceso de usuarios técnicos a servidores mediante certificados digitales emitidos por **EJBCA**.
 - **Autorización**: Restringir acciones en los servidores según el **rol** contenido en el certificado (p.ej., `sysadmin`, `databases`, `devops`).
 - **Auditoría**: Registrar y centralizar eventos de ejecución de comandos en **Elastic Stack** para su análisis y trazabilidad.
 - **Gestión centralizada**: Configurar roles y permisos de forma remota y unificada.
