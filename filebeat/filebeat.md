@@ -26,3 +26,7 @@ Para que Filebeat se ejecute automáticamente en cada arranque del sistema, conf
 
 `sudo systemctl daemon-reload` <br>
 `sudo systemctl enable filebeat.service`
+
+### Parámetros de configuración del archivo filebeat.yml
+
+Una vez instalado y activo, Filebeat puede ser configurado como se indica en el archivo de filebeat.conf.yml de este directorio.
