@@ -14,7 +14,8 @@ Instale los paquetes necesarios para permitir el uso del protocolo HTTPS con APT
 
 Guarde la definición del repositorio Filebeat:
 
-`echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/ apt/sources.list.d/elastic-7.x.list`
+`echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/
+apt/sources.list.d/elastic-7.x.list`
 
 Actualice los paquetes e instale el agente:
 
