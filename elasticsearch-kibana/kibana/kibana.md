@@ -2,27 +2,30 @@
 
 ### Instalación
 
-A continuación se describe el procedimiento para instalar Kibana.
+Importe la clave de firma pública de Elastic para garantizar la autenticidad de los paquetes instalados. Ejecute el siguiente comando:
 
-Descargue y agregue la clave de firma pública de Elasticsearch para garantizar la autenticidad de los paquetes:
+`wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o / usr/share/keyrings/elasticsearch-keyring.gpg`
 
-`wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -`
-
-Instale los paquetes necesarios para permitir el uso del protocolo HTTPS con APT:
+Instale el paquete `apt-transport-https`
 
 `sudo apt-get install apt-transport-https`
 
-Guarde la definición del repositorio Filebeat:
+Agregue la definición del repositorio oficial de Elastic:
 
-`echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/ apt/sources.list.d/elastic-7.x.list`
+`echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts. elastic.co/packages/9.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic -9.x.list`
 
-Actualice los paquetes e instale el agente:
+Actualice los repositorios e instale kibana:
 
-`sudo apt-get update && sudo apt-get install filebeat`
+`sudo apt-get update && sudo apt-get install kibana`
 
-### Configuración del servicio
+### Habilitación y ejecución del servicio Kibana
 
-Para que Filebeat se ejecute automáticamente en cada arranque del sistema, configure el servicio de la siguiente manera:
+Configure el servicio Kibana para que se inicie automáticamente al arrancar el sistema, ejecute los siguientes comandos:
 
-`sudo systemctl daemon-reload` <br>
-`sudo systemctl enable filebeat.service`
+`sudo /bin/systemctl daemon-reload` <br>
+`sudo /bin/systemctl enable kibana.service`
+
+El servicio puede iniciarse y detenerse al ejecutar:
+
+`sudo systemctl start kibana.service` <br>
+`sudo systemctl stop kibana.service`
