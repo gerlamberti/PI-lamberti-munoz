@@ -2,7 +2,7 @@
 
 ### Instalación
 
-A continuación se describe el procedimiento para instalar el agente Kibana.
+A continuación se describe el procedimiento para instalar Kibana.
 
 Descargue y agregue la clave de firma pública de Elasticsearch para garantizar la autenticidad de los paquetes:
 
