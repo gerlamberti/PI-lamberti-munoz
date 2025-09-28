@@ -68,7 +68,7 @@ RUN apt-get update && apt-get upgrade -y \
 	&& apt-get install opensc -y
 	
 RUN wget https://github.com/softhsm/SoftHSMv2/archive/refs/tags/2.3.0.tar.gz
-RUN tar -xzf softhsm-2.3.0.tar.gz
+RUN tar -xzf SoftHSMv2-2.3.0.tar.gz
 WORKDIR /softhsm-2.3.0
 RUN ./configure --disable-gost
 #RUN ./configure
