@@ -67,7 +67,7 @@ RUN apt-get update && apt-get upgrade -y \
 	&& apt-get install libssl-dev -y \
 	&& apt-get install opensc -y
 	
-RUN wget https://dist.opendnssec.org/source/softhsm-2.3.0.tar.gz
+RUN wget https://github.com/softhsm/SoftHSMv2/archive/refs/tags/2.3.0.tar.gz
 RUN tar -xzf softhsm-2.3.0.tar.gz
 WORKDIR /softhsm-2.3.0
 RUN ./configure --disable-gost
