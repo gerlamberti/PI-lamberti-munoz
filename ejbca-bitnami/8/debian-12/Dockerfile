@@ -67,13 +67,21 @@ RUN apt-get update && apt-get upgrade -y \
 	&& apt-get install libssl-dev -y \
 	&& apt-get install opensc -y
 	
-RUN wget https://github.com/softhsm/SoftHSMv2/archive/refs/tags/2.3.0.tar.gz
-RUN tar -xzf 2.3.0.tar.gz
-WORKDIR /SoftHSMv2-2.3.0
-RUN ./configure --disable-gost
+#RUN wget https://github.com/softhsm/SoftHSMv2/archive/refs/tags/2.3.0.tar.gz
+#RUN tar -xzf 2.3.0.tar.gz
+#WORKDIR /SoftHSMv2-2.3.0
+#RUN ./configure --disable-gost
 #RUN ./configure
-RUN make
-RUN make install
+#RUN make
+#RUN make install
+
+RUN apt install softhsm2 -y
+ENV SOFTHSM2_CONF=/etc/softhsm/softhsm2.conf
+
+RUN mkdir -p /var/lib/softhsm/tokens \
+ && chmod 700 /var/lib/softhsm/tokens
+
+RUN chown -R 1001:1001 /var/lib/softhsm /etc/softhsm
 
 USER 1001 
 RUN softhsm2-util --init-token --free --label "SoftHSM Slot 1" --pin ejbca --so-pin ejbca
@@ -81,6 +89,6 @@ RUN softhsm2-util --init-token --free --label "SoftHSM Slot 1" --pin ejbca --so-
 
 EXPOSE 8009 8080 9990
 
-USER 1001
+#USER 1001
 ENTRYPOINT [ "/opt/bitnami/scripts/ejbca/entrypoint.sh" ]
 CMD [ "/opt/bitnami/scripts/ejbca/run.sh" ]
